@@ -25,7 +25,6 @@ export default class News {
     try {
       const { data } = await axios.get(this._getUrl());
       this._totalPage = Math.ceil(data.totalResults / this._pageSize);
-      // console.log(this._totalPage)
       return {
         article: data.articles,
         totalPage: this._totalPage,
@@ -33,10 +32,10 @@ export default class News {
         category: this._category,
         totalResults: data.totalResults,
         isNext: this._isNext(),
-        isPrev:this._isPrev()
+        isPrev: this._isPrev(),
       };
     } catch (error) {
-        console.log(error)
+      console.log(error);
       throw new Error(error);
     }
   }
@@ -59,21 +58,23 @@ export default class News {
 
   setCurrentPage(pageNumber) {
     if (pageNumber < 1 || pageNumber > this._totalPage) {
-        throw new Error('Invalid Page Number')
+      alert(`Invalid Page Number! Enter between 1 to ${this._totalPage}`)
+      return this.getNews();
+    } else {
+      this._currentPage = pageNumber;
+      return this.getNews();
     }
-    this._currentPage = pageNumber
-    return this.getNews()
   }
 
   changeCategory(category) {
-    this._category=category
+    this._category = category;
     this._currentPage = 1;
-    return this.getNews()
+    return this.getNews();
   }
 
   search(term) {
-    this._searchTerm = term
-    return this.getNews()
+    this._searchTerm = term;
+    return this.getNews();
   }
 
   _getUrl() {
@@ -88,7 +89,7 @@ export default class News {
       url += `&pageSize=${this._pageSize}`;
     }
     if (this._currentPage) {
-        url += `&page=${this._currentPage}`;
+      url += `&page=${this._currentPage}`;
     }
 
     return url;

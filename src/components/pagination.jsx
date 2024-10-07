@@ -9,17 +9,18 @@ class Pagination extends Component {
   };
 
   render() {
-    const { prevPage, nextPage, currentPage, totalPage, handleOnkeyPress } =
-      this.props;
+    const { currentPage, totalPage, next, prev, isNext, isPrev } = this.props;
 
     return (
       <div className="d-flex my-5 align-items-center">
-        {currentPage > 1 && (
-          <button className="btn btn-warning" onClick={prevPage}>
+        
+          <button className="btn btn-warning" disabled={!isPrev} onClick={()=>{
+            prev()
+          }}>
             previous
           </button>
-        )}
-        <div className="flex-grow-1 text-center">
+        
+        {/* <div className="flex-grow-1 text-center">
           {this.state.isEditable ? (
             <input
               type="number"
@@ -29,7 +30,7 @@ class Pagination extends Component {
               onChange={this.handleOnChange}
               onKeyUp={(e) => {
                 if (e.key === "Enter") {
-                  handleOnkeyPress(e.target.value);
+                  // handleOnkeyPress(e.target.value);
                   console.log("entered ", e.target.value);
                   this.setState({ isEditable: false });
                 }
@@ -49,8 +50,10 @@ class Pagination extends Component {
               <small>Double Tap to Edit</small>
             </p>
           )}
-        </div>
-        <button className="btn btn-warning ms-auto" onClick={nextPage}>
+        </div> */}
+        <button className="btn btn-warning ms-auto" disabled={!isNext} onClick={()=>{
+          next()
+        }}>
           next
         </button>
       </div>
